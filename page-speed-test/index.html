@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Audit Demo | Connect with Bayezid</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1e40af;
+            --bg-color: #f3f4f6;
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --glass-border: rgba(0, 0, 0, 0.08);
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --danger: #dc2626;
+            --success: #16a34a;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #e0e7ff 0%, #f3f4f6 100%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dashboard-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 2rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(12px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0 0 0.5rem 0;
+            color: var(--text-main);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            border: 2px solid #e5e7eb;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Notice / Upsell Alert */
+        .alert-box {
+            display: none;
+            background: #fef2f2;
+            border: 1px solid #f87171;
+            color: var(--danger);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        .alert-box.show {
+            display: block;
+        }
+
+        /* Results Area */
+        .results-area {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .results-area.show {
+            display: block;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            padding: 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+
+        .metric-title {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .score-good { color: var(--success); }
+        .score-avg { color: #d97706; }
+        .score-poor { color: var(--danger); }
+
+        .download-btn {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            background: #111827;
+            color: white;
+            text-decoration: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+            margin-top: 1rem;
+            cursor: pointer;
+        }
+
+        .download-btn:hover {
+            background: #1f2937;
+        }
+
+        /* Loader */
+        .loader {
+            display: none;
+            text-align: center;
+            margin: 2rem 0;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .loader.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <div class="header">
+            <h1>Site Audit Demo</h1>
+            <p>Powered by Sayad Md Bayezid Hosan | Connect with Bayezid</p>
+        </div>
+
+        <div id="upsellAlert" class="alert-box">
+            <strong>Limit Reached:</strong> You have already used your free demo audit for this domain. To unlock unlimited, detailed audits and custom performance solutions, please upgrade to our premium agency services.
+        </div>
+
+        <div class="search-box">
+            <input type="url" id="urlInput" placeholder="Enter website URL (e.g., https://example.com)" required>
+            <button id="auditBtn" class="btn-primary" onclick="startAudit()">Run Free Audit</button>
+        </div>
+
+        <div id="loadingState" class="loader">
+            ⏳ Analyzing website performance... Please wait (this takes about 10-20 seconds).
+        </div>
+
+        <div id="resultsArea" class="results-area">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-title">Performance Score</div>
+                    <div id="perfScore" class="metric-value">-</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title">First Contentful Paint</div>
+                    <div id="fcpValue" class="metric-value">-</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title">Largest Contentful Paint</div>
+                    <div id="lcpValue" class="metric-value">-</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title">Total Blocking Time</div>
+                    <div id="tbtValue" class="metric-value">-</div>
+                </div>
+            </div>
+            
+            <button id="downloadJsonBtn" class="download-btn">⬇️ Download Full Detailed Report (.json)</button>
+        </div>
+    </div>
+
+    <script>
+        // --- Configuration ---
+        const API_KEY = 'AIzaSyD6-aTvlvX_1jHMMfCi-nCAwLe2_JIjB1A';
+        const OWNER_DOMAINS = [
+            'sayadbayezid.com',
+            'connectwithbayezid.it.com',
+            'smartgentools.com',
+            'genzfrontir.com'
+        ];
+
+        // Global variable to hold current report data
+        let currentReportData = null;
+        let currentDomain = '';
+
+        /**
+         * Normalizes URL to root domain
+         */
+        function getNormalizedDomain(urlString) {
+            try {
+                if (!urlString.startsWith('http://') && !urlString.startsWith('https://')) {
+                    urlString = 'https://' + urlString;
+                }
+                const urlObj = new URL(urlString);
+                return urlObj.hostname.replace(/^www\./, '').toLowerCase();
+            } catch (error) {
+                return null;
+            }
+        }
+
+        /**
+         * Gatekeeper check
+         */
+        function isAuditAllowed(domain) {
+            if (OWNER_DOMAINS.includes(domain)) return true;
+            
+            let auditHistory = JSON.parse(localStorage.getItem('cwb_audit_history') || '[]');
+            if (auditHistory.includes(domain)) return false;
+            
+            return true;
+        }
+
+        /**
+         * Record execution
+         */
+        function recordAuditExecution(domain) {
+            if (OWNER_DOMAINS.includes(domain)) return;
+            let auditHistory = JSON.parse(localStorage.getItem('cwb_audit_history') || '[]');
+            if (!auditHistory.includes(domain)) {
+                auditHistory.push(domain);
+                localStorage.setItem('cwb_audit_history', JSON.stringify(auditHistory));
+            }
+        }
+
+        /**
+         * Triggers Download
+         */
+        document.getElementById('downloadJsonBtn').addEventListener('click', () => {
+            if (!currentReportData) return;
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(currentReportData, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `${currentDomain}-audit-report.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        });
+
+        /**
+         * Assign color class based on score logic
+         */
+        function getScoreColorClass(score) {
+            if (score >= 90) return 'score-good';
+            if (score >= 50) return 'score-avg';
+            return 'score-poor';
+        }
+
+        /**
+         * Main Audit Function
+         */
+        async function startAudit() {
+            const rawUrl = document.getElementById('urlInput').value.trim();
+            const targetDomain = getNormalizedDomain(rawUrl);
+            const upsellAlert = document.getElementById('upsellAlert');
+            const loadingState = document.getElementById('loadingState');
+            const resultsArea = document.getElementById('resultsArea');
+            const auditBtn = document.getElementById('auditBtn');
+
+            // Reset UI
+            upsellAlert.classList.remove('show');
+            resultsArea.classList.remove('show');
+            
+            if (!targetDomain) {
+                alert("Please enter a valid website URL.");
+                return;
+            }
+
+            // Gatekeeper Check
+            if (!isAuditAllowed(targetDomain)) {
+                upsellAlert.classList.add('show');
+                return;
+            }
+
+            // Start UI state
+            auditBtn.disabled = true;
+            loadingState.classList.add('show');
+
+            try {
+                const apiEndpoint = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https://${targetDomain}&key=${API_KEY}`;
+                
+                const response = await fetch(apiEndpoint);
+                if (!response.ok) throw new Error("API Request Failed");
+                
+                const reportData = await response.json();
+                
+                // Store globally for download button
+                currentReportData = reportData;
+                currentDomain = targetDomain;
+
+                // Extract Metrics for Display
+                const lighthouse = reportData.lighthouseResult;
+                const score = Math.round(lighthouse.categories.performance.score * 100);
+                const fcp = lighthouse.audits['first-contentful-paint'].displayValue;
+                const lcp = lighthouse.audits['largest-contentful-paint'].displayValue;
+                const tbt = lighthouse.audits['total-blocking-time'].displayValue;
+
+                // Update DOM
+                const scoreEl = document.getElementById('perfScore');
+                scoreEl.textContent = score;
+                scoreEl.className = 'metric-value ' + getScoreColorClass(score);
+
+                document.getElementById('fcpValue').textContent = fcp;
+                document.getElementById('lcpValue').textContent = lcp;
+                document.getElementById('tbtValue').textContent = tbt;
+
+                // Record history
+                recordAuditExecution(targetDomain);
+
+                // Show Results
+                loadingState.classList.remove('show');
+                resultsArea.classList.add('show');
+
+            } catch (error) {
+                console.error(error);
+                alert('Audit failed. The URL might be unreachable or the API timed out. Try again.');
+                loadingState.classList.remove('show');
+            } finally {
+                auditBtn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
