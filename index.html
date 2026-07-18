@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Marketing Suite | Connect with Bayezid</title>
+    <meta name="description" content="A powerful suite of digital marketing and web performance tools by Sayad Md Bayezid Hosan.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1e40af;
+            --accent: #7c3aed;
+            --bg-color: #f3f4f6;
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --glass-border: rgba(0, 0, 0, 0.08);
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #e0e7ff 0%, #f3f4f6 100%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar */
+        nav {
+            background: var(--glass-bg);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1.25rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 5rem 2rem 3rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin: 0 0 1rem;
+            background: linear-gradient(135deg, var(--text-main), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Tools Grid */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            flex: 1;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .tool-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(12px);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.12);
+            border-color: var(--primary);
+        }
+
+        .tool-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .tool-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0 0 0.5rem;
+        }
+
+        .tool-desc {
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .tool-status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            width: fit-content;
+        }
+
+        .status-live {
+            background: rgba(22, 163, 74, 0.1);
+            color: #16a34a;
+        }
+
+        .status-coming {
+            background: rgba(107, 114, 128, 0.1);
+            color: #6b7280;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--glass-border);
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="logo">🚀 <span>AI Marketing</span> Suite</a>
+        <div style="font-weight: 600; color: var(--text-muted);">
+            By Connect with Bayezid
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1>Powerful Tools for Digital Growth</h1>
+        <p>A completely free suite of premium utilities designed to optimize your website, analyze SEO, and scale your digital marketing efforts.</p>
+    </div>
+
+    <div class="container">
+        <div class="tools-grid">
+            
+            <!-- Tool 1: Page Speed Test (Live) -->
+            <!-- The href points to the folder we created earlier -->
+            <a href="page-speed-test/" class="tool-card">
+                <div class="tool-icon">⚡</div>
+                <h2 class="tool-title">Site Speed Auditor</h2>
+                <p class="tool-desc">Analyze Core Web Vitals, FCP, LCP, and Performance Scores instantly using the official Google API.</p>
+                <div class="tool-status status-live">🟢 Live Now</div>
+            </a>
+
+            <!-- Tool 2: Placeholder for future tool -->
+            <a href="#" class="tool-card" style="pointer-events: none;">
+                <div class="tool-icon" style="background: rgba(124, 58, 237, 0.1); color: var(--accent);">🔍</div>
+                <h2 class="tool-title">SEO Deep Analyzer</h2>
+                <p class="tool-desc">Extract on-page SEO issues, missing meta tags, and schema validation from any webpage.</p>
+                <div class="tool-status status-coming">⏳ Coming Soon</div>
+            </a>
+
+            <!-- Tool 3: Placeholder for future tool -->
+            <a href="#" class="tool-card" style="pointer-events: none;">
+                <div class="tool-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">🏷️</div>
+                <h2 class="tool-title">Smart Hashtag Gen</h2>
+                <p class="tool-desc">Generate trending and niche-specific hashtags for Instagram, TikTok, and Meta based on your keywords.</p>
+                <div class="tool-status status-coming">⏳ Coming Soon</div>
+            </a>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 AI Marketing Suite. Developed by <a href="https://www.sayadbayezid.com" target="_blank">Sayad Md Bayezid Hosan</a>.</p>
+    </footer>
+
+</body>
+</html>
